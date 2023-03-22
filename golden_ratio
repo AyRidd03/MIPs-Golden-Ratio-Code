@@ -1,0 +1,62 @@
+.data
+	#how to get user input
+	prompt: .asciiz "Enter the width for the Golden Ratio: "
+	fzero: .float 0.0 # Zero for floats since $zero no work
+	phi: .float 1.618 # The Golden Ratio
+	goldenmessage: .asciiz "\n Your Golden Ratio number is about : "
+	end:
+
+.text
+main:
+	jal storage # set up the Values needed for the equation
+	jal input # Gets Input From the User and Stores it
+	jal findgold # Calculates the Golden Ratio
+	jal showgold # Prints it to the User
+	#end the program
+	li $v0, 10
+	la $a0, end
+	syscall
+	
+	
+storage:
+	#Some number Storage
+	lwc1 $f4, fzero # Personal note, that's LWC1 btw (Last symbol is One)
+	lwc1 $f5, phi
+	jr $ra #return
+	
+	
+input:
+	#prompt user
+	li $v0, 4
+	la $a0, prompt
+	syscall
+	
+	#get user input
+	li $v0, 6 #code to get a float from user
+	syscall
+	
+	#Do the Math
+	
+	add.s $f1, $f0, $f4 #Store Input into f1
+	jr $ra #return
+	
+	
+findgold:
+	# Find the golden number
+	div.s $f2, $f1, $f5 #Store the results in $f2
+	jr $ra #return
+	
+	
+showgold:
+	#display message
+	li $v0, 4
+	la $a0, goldenmessage
+	syscall
+	
+	#now print the number
+	li $v0, 2
+	add.s $f12, $f2, $f4 # Pull results into f12 by adding f2 and zero (f4)
+	syscall
+	jr $ra #return
+	
+	
