@@ -20,8 +20,9 @@ main:
 	
 storage:
 	#Some number Storage
-	lwc1 $f4, fzero # Personal note, that's LWC1 btw (Last symbol is One)
-	lwc1 $f5, phi
+	# Personal note, that's LWC1 btw (Last symbol is One)
+	lwc1 $f4, fzero # Stores a Float Zero into f4 for Storage Purposes
+	lwc1 $f5, phi # Stores phi(golden Ratio) into f5 for Mathematic Purposes
 	jr $ra #return
 	
 	
@@ -35,14 +36,12 @@ input:
 	li $v0, 6 #code to get a float from user
 	syscall
 	
-	#Do the Math
-	
 	add.s $f1, $f0, $f4 #Store Input into f1
 	jr $ra #return
 	
 	
 findgold:
-	# Find the golden number
+	# Find the golden number (divide the input by the golden ratio)
 	div.s $f2, $f1, $f5 #Store the results in $f2
 	jr $ra #return
 	
